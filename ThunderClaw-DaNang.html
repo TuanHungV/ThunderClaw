@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThunderClaw FTC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            background:
+                rgba(5,7,10,.72);
+            backdrop-filter:
+                blur(20px);
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+            z-index: 1000;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .team-logo {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow:
+                0 0 18px rgba(255,110,0,.25);
+        }
+        .logo {
+            font-size: 21px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        .logo span {
+            color: #ff6600;
+        }
+        nav ul {
+            display: flex;
+            gap: 34px;
+            list-style: none;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            transition: .2s;
+        }
+        nav ul li a:hover {
+            color: #ff6a00;
+        }
+        /* =====================================================
+           HERO
+        ===================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding:
+                140px 7%
+                130px;
+            position: relative;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            max-width: 920px;
+            transition:
+                transform .12s linear;
+        }
+        .hero-small {
+            color: #ff6a00;
+            font-size: 13px;
+            letter-spacing: 5px;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+        .hero h1 {
+            font-size:
+                clamp(
+                    70px,
+                    12vw,
+                    160px
+                );
+            line-height: .82;
+            letter-spacing: -6px;
+            font-weight: 950;
+        }
+        .hero h1 span {
+            color: #ff6200;
+            text-shadow:
+                0 0 20px rgba(255,90,0,.2);
+        }
+        .hero p {
+            margin-top: 38px;
+            max-width: 700px;
+            color: #aaa;
+            font-size: 19px;
+            line-height: 1.7;
+        }
+        .hero-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding:
+                16px 27px;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff5200,
+                    #ff8a00
+                );
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            box-shadow:
+                0 10px 30px rgba(255,90,0,.2);
+            transition: .25s;
+        }
+        .hero-button:hover {
+            transform:
+                translateY(-5px);
+            background: white;
+            color: #070707;
+        }
+        /* =====================================================
+           ROBOTS
+        ===================================================== */
+        .robots-section {
+            padding:
+                130px 7%;
+            position: relative;
+            background:
+                rgba(5,5,5,.82);
+            backdrop-filter:
+                blur(8px);
+        }
+        .section-header {
+            max-width: 800px;
+            margin-bottom: 60px;
+        }
+        .section-tag {
+            color: #ff6200;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 4px;
+        }
+        .section-header h2 {
+            margin-top: 16px;
+            font-size:
+                clamp(
+                    50px,
+                    7vw,
+                    90px
+                );
+            line-height: .9;
+            letter-spacing: -3px;
+        }
+        .section-header h2 span {
+            color: #ff6200;
+        }
+        .section-header p {
+            margin-top: 26px;
+            max-width: 650px;
+            color: #888;
+            line-height: 1.7;
+            font-size: 18px;
+        }
+        .robot-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 25px;
+        }
+        .robot-card {
+            background:
+                rgba(15,15,15,.86);
+            border:
+                1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+            overflow: hidden;
+            transition:
+                .35s ease;
+        }
+        .robot-card:hover {
+            transform:
+                translateY(-10px);
+            border-color:
+                #ff6200;
+            box-shadow:
+                0 25px 60px rgba(255,90,0,.13);
+        }
+        .robot-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            background: #141414;
+        }
+        .robot-info {
+            padding: 28px;
+        }
+        .robot-season {
+            color: #ff6200;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        .robot-name {
+            margin-top: 10px;
+            font-size: 27px;
+        }
+        .robot-description {
+            margin-top: 15px;
+            color: #888;
+            line-height: 1.6;
+            min-height: 70px;
+        }
+        .robot-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding:
+                12px 19px;
+            border:
+                1px solid #444;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 900;
+            transition: .25s;
+        }
+        .robot-button:hover {
+            background: #ff6200;
+            border-color: #ff6200;
+        }
+        /* =====================================================
+           ABOUT
+        ===================================================== */
+        .about {
+            padding:
+                130px 7%;
+            background:
+                rgba(8,8,8,.90);
+        }
+        .about-content {
+            max-width: 1000px;
+        }
+        .about h2 {
+            margin-top: 16px;
+            font-size:
+                clamp(
+                    48px,
+                    7vw,
+                    85px
+                );
+            line-height: .95;
+            letter-spacing: -3px;
+        }
+        .about h2 span {
+            color: #ff6200;
+        }
+        .about > .about-content > p {
+            margin-top: 28px;
+            max-width: 850px;
+            color: #999;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        .values {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 55px;
+        }
+        .value-card {
+            background:
+                rgba(20,20,20,.9);
+            border:
+                1px solid rgba(255,255,255,.08);
+            border-radius: 15px;
+            padding: 28px;
+            transition: .3s;
+        }
+        .value-card:hover {
+            transform:
+                translateY(-7px);
+            border-color:
+                #ff6200;
+        }
+        .value-number {
+            color: #ff6200;
+            font-size: 12px;
+            font-weight: 900;
+        }
+        .value-card h3 {
+            margin-top: 13px;
+            font-size: 23px;
+        }
+        .value-card p {
+            margin-top: 13px;
+            color: #777;
+            line-height: 1.6;
+        }
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding:
+                45px 7%;
+            border-top:
+                1px solid rgba(255,255,255,.08);
+            color: #666;
+            background: #050505;
+        }
+        footer strong {
+            color: white;
+        }
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+        @media(max-width: 1000px) {
+            .robot-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+            .values {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+            .bridge {
+                opacity: .65;
+            }
+        }
+        @media(max-width: 650px) {
+            nav {
+                height: 72px;
+                padding:
+                    0 5%;
+            }
+            nav ul {
+                display: none;
+            }
+            .team-logo {
+                width: 47px;
+                height: 47px;
+            }
+            .logo {
+                font-size: 16px;
+            }
+            .hero {
+                padding:
+                    130px 5%
+                    100px;
+            }
+            .hero h1 {
+                font-size: 64px;
+                letter-spacing: -3px;
+            }
+            .robots-section,
+            .about {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+            .robot-grid,
+            .values {
+                grid-template-columns:
+                    1fr;
+            }
+            .city {
+                opacity: .3;
+            }
+            .bridge {
+                opacity: .4;
+                transform:
+                    scale(.9);
+            }
+            footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            #cursorDragon {
+                display: none;
+            }
+        }
+    
+/* DA NANG NIGHTSCAPE — original vector scenery, no external libraries. */
+:root { --gold:#ffbc69; --ice:#6fdbed; }
+body { background:#050d17; isolation:isolate; }
+#nightscape { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+ background:radial-gradient(ellipse at 78% 44%,#163043 0,transparent 48%),linear-gradient(#050c17,#0b1f2c 72%,#061521); }
+#nightscape::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(3,10,18,.56),transparent 72%); }
+.scene-svg { position:absolute; bottom:-1px; left:-4%; width:108%; height:100%; }
+.scene-layer { will-change:transform; }
+
+#ambient,#pointerFx { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#pointerFx { position:fixed; z-index:1001; }
+.hero { min-height:100svh; padding-top:160px; padding-bottom:230px; }
+.hero-content { max-width:780px; }
+.hero h1 { font-size:clamp(70px,10.5vw,150px); letter-spacing:-.065em; }
+.hero h1 span { color:#ffae5b; text-shadow:0 0 65px #ff9b3020; }
+.hero-small { color:#8ad1db; letter-spacing:4px; }
+.hero p { max-width:560px; color:#bbcad3; font-size:17px; }
+.hero-button { background:#ffc080; color:#101820; border-radius:3px; box-shadow:0 8px 40px #ffb96b22; }
+.hero-button:hover { background:#ffdbb3; }
+nav { background:#06101bbd; border-color:#a5dfed18; }
+.logo span { color:#ffb564; }
+.scene-caption { position:absolute; bottom:35px; left:7%; right:7%; display:flex; justify-content:space-between; gap:18px; color:#8ba8b8; font-size:10px; letter-spacing:2px; line-height:1.7; }
+.scene-caption b { color:#ffca8c; font-weight:500; }
+.robots-section,.about { position:relative; background:#06101be3; backdrop-filter:blur(8px); }
+.robot-card,.value-card { background:#0d1a26e8; border-color:#95c8df22; }
+.robot-description,.section-header p,.value-card p { color:#a2b2bf; }
+section { scroll-margin-top:90px; }
+a:focus-visible,button:focus-visible { outline:2px solid #90e6ef; outline-offset:5px; }
+#motionToggle { position:fixed; bottom:18px; right:18px; z-index:1002; border:1px solid #9dccdd44; background:#081421e8; color:#cadbe4; padding:10px 13px; border-radius:30px; font:11px Arial; cursor:pointer; }
+.asset-placeholder { display:grid; place-content:center; text-align:center; color:#9dbacb; background:repeating-linear-gradient(45deg,transparent 0 24px,#749ca808 24px 25px),#0b1824; }
+.asset-placeholder span { font-size:42px; color:#eeb679; }.asset-placeholder small { margin-top:12px; letter-spacing:2px; font-size:10px; }
+.logo-placeholder { width:48px; height:48px; display:grid; place-content:center; color:#ffc080; border:1px solid #ffc08066; border-radius:50%; font-weight:900; }
+@media(max-width:650px) {
+ nav { height:auto; min-height:76px; padding:12px 5%; flex-wrap:wrap; gap:12px; } nav ul { display:flex; gap:20px; } nav ul li a { font-size:10px; }
+ .hero { padding:165px 5% 250px; min-height:900px; }.hero h1 {font-size:clamp(49px,13vw,80px)} .hero p {font-size:16px}
+ .scene-svg {width:180%;left:-55%;height:72%}
+ .scene-caption {left:5%;bottom:70px;font-size:9px;flex-direction:column;gap:5px}.robots-section,.about{padding-top:85px;padding-bottom:85px}
+ .hero-small {letter-spacing:2px;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce) { html {scroll-behavior:auto} *,*::before,*::after {transition:none!important;animation:none!important;} }
+
+
+/* Landmark sculpture occupies the front-right of the hero. */
+.carp-foreground { position:absolute; right:3%; bottom:58px; width:clamp(250px,29vw,410px); z-index:2; pointer-events:none; filter:drop-shadow(0 18px 26px #0007); }
+.carp-foreground svg { display:block; width:100%; height:auto; }
+.hero-content { max-width:62%; }
+.hero p { max-width:510px; }
+.scene-caption { z-index:3; }
+@media (max-width:1000px) and (min-width:651px) { .carp-foreground {right:0;width:270px;} .hero h1 {font-size:clamp(64px,10vw,100px)} }
+@media (max-width:650px) { .hero {min-height:1120px;padding-bottom:550px;align-items:flex-start;} .hero-content {max-width:100%;} .carp-foreground {width:245px;right:3%;bottom:95px;} .scene-caption {bottom:30px;max-width:75%;} }
+
+</style>
+</head>
+<body>
+<div id="nightscape" aria-hidden="true">
+<canvas id="ambient"></canvas>
+
+<svg class="scene-svg" viewBox="0 0 1500 850" preserveAspectRatio="xMidYMax slice">
+<defs>
+ <linearGradient id="river" x2="0" y2="1"><stop stop-color="#153443"/><stop offset="1" stop-color="#040f1d"/></linearGradient>
+ <linearGradient id="bridgeGold"><stop stop-color="#815435"/><stop offset=".5" stop-color="#ffc879"/><stop offset="1" stop-color="#ea9d45"/></linearGradient>
+ <pattern id="windows" width="14" height="19" patternUnits="userSpaceOnUse"><rect width="14" height="19" fill="#0a1a27"/><rect x="5" y="7" width="2" height="3" fill="#b8bc87" opacity=".25"/></pattern>
+ <linearGradient id="reflect" x2="0" y2="1"><stop stop-color="#e3a959" stop-opacity=".24"/><stop offset="1" stop-color="#d69a52" stop-opacity="0"/></linearGradient>
+</defs>
+<g class="scene-layer" data-depth="-6"><path d="M0 570 L110 512 179 540 315 456 420 525 521 493 650 565 785 523 870 557 960 501 1090 547 1230 456 1380 545 1500 490 V700 H0Z" fill="#17313d" opacity=".45"/><rect x="0" y="548" width="75" height="72" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="85" y="502" width="46" height="118" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="145" y="537" width="72" height="83" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="233" y="490" width="43" height="130" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="292" y="540" width="95" height="80" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="400" y="472" width="32" height="148" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="453" y="530" width="64" height="90" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="530" y="550" width="87" height="70" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="640" y="517" width="44" height="103" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="700" y="551" width="79" height="69" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="798" y="505" width="51" height="115" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="871" y="544" width="75" height="76" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="965" y="487" width="34" height="133" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="1020" y="525" width="90" height="95" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="1130" y="550" width="45" height="70" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="1190" y="497" width="61" height="123" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="1268" y="535" width="70" height="85" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="1360" y="480" width="54" height="140" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/><rect x="1430" y="540" width="70" height="80" fill="url(#windows)" stroke="#416675" stroke-opacity=".2"/></g>
+<!-- Song Han Bridge: twin pylons and cable fans -->
+<g class="scene-layer" data-depth="-10" fill="none" stroke="#62c3d7" opacity=".48"><g stroke-width="1"><path d="M205 515 L130 591"/><path d="M205 515 L145 591"/><path d="M205 515 L160 591"/><path d="M205 515 L175 591"/><path d="M205 515 L190 591"/><path d="M205 515 L205 591"/><path d="M205 515 L220 591"/><path d="M205 515 L235 591"/><path d="M205 515 L250 591"/><path d="M205 515 L265 591"/><path d="M205 515 L280 591"/><path d="M341 515 L266 591"/><path d="M341 515 L281 591"/><path d="M341 515 L296 591"/><path d="M341 515 L311 591"/><path d="M341 515 L326 591"/><path d="M341 515 L341 591"/><path d="M341 515 L356 591"/><path d="M341 515 L371 591"/><path d="M341 515 L386 591"/><path d="M341 515 L401 591"/><path d="M341 515 L416 591"/></g><path d="M205 608 V511 M341 608 V511 M83 592 H467 M80 601 H470" stroke-width="3"/><path d="M205 605 V645 M341 605 V645" stroke-width="9"/></g>
+<!-- Tran Thi Ly Bridge: inclined mast and asymmetric cable fan -->
+<g class="scene-layer" data-depth="-14" fill="none" stroke="#94bacd" opacity=".6"><g stroke-width="1"><path d="M1060 429 L902 615"/><path d="M1060 429 L927 615"/><path d="M1060 429 L952 615"/><path d="M1060 429 L977 615"/><path d="M1060 429 L1002 615"/><path d="M1060 429 L1027 615"/><path d="M1060 429 L1052 615"/><path d="M1060 429 L1077 615"/><path d="M1060 429 L1102 615"/><path d="M1060 429 L1127 615"/><path d="M1060 429 L1152 615"/><path d="M1060 429 L1177 615"/><path d="M1060 429 L1202 615"/><path d="M1060 429 L1227 615"/></g><path d="M1012 653 L1060 429" stroke-width="7"/><path d="M891 617 H1252" stroke-width="4"/></g>
+<path d="M0 667 H1500 V850 H0Z" fill="url(#river)"/>
+<path d="M150 676 L1210 676 1440 850 20 850Z" fill="url(#reflect)"/>
+<!-- Dragon Bridge: gold steel tubes and sculpted head inspired by the supplied photo. -->
+<g class="scene-layer" data-depth="13" id="dragonBridge">
+<path d="M182 557 C223 581 247 671 310 686 C387 706 408 565 493 565 C579 565 578 696 663 690 C744 683 756 557 834 560 C919 563 919 697 1004 682 C1094 666 1078 573 1164 584 C1240 594 1294 652 1385 655" transform="translate(0 0)" fill="none" stroke="#ffb94d" stroke-width="34" opacity="0.08"/><path d="M182 557 C223 581 247 671 310 686 C387 706 408 565 493 565 C579 565 578 696 663 690 C744 683 756 557 834 560 C919 563 919 697 1004 682 C1094 666 1078 573 1164 584 C1240 594 1294 652 1385 655" transform="translate(0 0)" fill="none" stroke="#8a5c25" stroke-width="24" opacity="1"/><path d="M182 557 C223 581 247 671 310 686 C387 706 408 565 493 565 C579 565 578 696 663 690 C744 683 756 557 834 560 C919 563 919 697 1004 682 C1094 666 1078 573 1164 584 C1240 594 1294 652 1385 655" transform="translate(0 -7)" fill="none" stroke="#ffe2a0" stroke-width="3" opacity="1"/><path d="M182 557 C223 581 247 671 310 686 C387 706 408 565 493 565 C579 565 578 696 663 690 C744 683 756 557 834 560 C919 563 919 697 1004 682 C1094 666 1078 573 1164 584 C1240 594 1294 652 1385 655" transform="translate(0 0)" fill="none" stroke="#d9a145" stroke-width="4" opacity="1"/><path d="M182 557 C223 581 247 671 310 686 C387 706 408 565 493 565 C579 565 578 696 663 690 C744 683 756 557 834 560 C919 563 919 697 1004 682 C1094 666 1078 573 1164 584 C1240 594 1294 652 1385 655" transform="translate(0 7)" fill="none" stroke="#eac56b" stroke-width="3" opacity="1"/><path d="M182 557 C223 581 247 671 310 686 C387 706 408 565 493 565 C579 565 578 696 663 690 C744 683 756 557 834 560 C919 563 919 697 1004 682 C1094 666 1078 573 1164 584 C1240 594 1294 652 1385 655" fill="none" stroke="#d8b366" stroke-width="22" stroke-dasharray="2 11"/><g id="dragonBridgeHead" transform="translate(43 477) scale(.88)" stroke-linejoin="round" stroke-linecap="round">
+<!-- Flame-like mane of the Dragon Bridge, facing toward the river. -->
+<path d="M65 34 Q81 7 96 23 Q113 7 127 25 L157 29 Q171 39 190 32 L181 50 209 54 192 68 222 76 200 86 228 109 199 107 219 132 187 122 199 148 168 131 168 151 143 131 130 145 116 117 98 126 91 104 69 106 59 86Z" fill="#cf922f" stroke="#ffe093" stroke-width="2"/>
+<path d="M129 63 Q178 77 197 106 M125 81 Q164 94 183 121 M110 96 Q135 112 149 134 M149 42 L174 49" fill="none" stroke="#725027" stroke-width="5"/>
+<path d="M30 37 Q20 25 32 17 Q43 10 54 22 Q66 4 82 18 L91 34 105 38 Q120 47 112 63 L91 81 74 95 52 87 43 77 22 77 12 65 16 55 6 49 17 37Z" fill="#e9b649" stroke="#ffe7a1" stroke-width="2"/>
+<path d="M56 26 Q48 15 36 22 M24 44 Q40 32 53 44 M16 58 Q34 46 48 59" fill="none" stroke="#9c6825" stroke-width="4"/>
+<path d="M44 63 L21 67 28 77 54 75 67 82 59 92 40 83 29 85 40 98 65 103 83 86" fill="#bd822b" stroke="#ffda83" stroke-width="2"/>
+<path d="M31 69 L35 76 41 69 M49 74 L52 81 57 74" fill="#ffedb5"/>
+<ellipse cx="76" cy="46" rx="13" ry="14" fill="#83602f"/><ellipse cx="76" cy="44" rx="9" ry="10" fill="#c9dce0"/><ellipse cx="77" cy="45" rx="4" ry="7" fill="#253a43"/><circle cx="74" cy="41" r="2" fill="#fff4c9"/>
+<path d="M61 30 Q74 20 89 31" fill="none" stroke="#ffda76" stroke-width="6"/>
+<path d="M13 60 Q-3 70 8 87 M49 89 Q40 112 28 104 M92 77 Q105 116 85 121" fill="none" stroke="#dfba61" stroke-width="3"/>
+</g><path d="M0 650 H1500 V667 H0Z" fill="#182e35" stroke="#6b8989" stroke-width="1"/>
+<path d="M0 650 H1500" stroke="#dbe8ba" stroke-width="2"/>
+<path d="M0 641 H1500" stroke="#7d9b9d" stroke-width="1"/>
+<path d="M0 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M16 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M32 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M48 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M64 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M80 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M96 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M112 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M128 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M144 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M160 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M176 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M192 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M208 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M224 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M240 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M256 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M272 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M288 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M304 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M320 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M336 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M352 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M368 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M384 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M400 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M416 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M432 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M448 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M464 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M480 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M496 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M512 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M528 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M544 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M560 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M576 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M592 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M608 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M624 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M640 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M656 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M672 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M688 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M704 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M720 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M736 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M752 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M768 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M784 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M800 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M816 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M832 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M848 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M864 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M880 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M896 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M912 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M928 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M944 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M960 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M976 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M992 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1008 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1024 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1040 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1056 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1072 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1088 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1104 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1120 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1136 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1152 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1168 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1184 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1200 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1216 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1232 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1248 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1264 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1280 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1296 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1312 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1328 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1344 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1360 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1376 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1392 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1408 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1424 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1440 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1456 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1472 642 V650" stroke="#94afaa" stroke-width="1"/><path d="M1488 642 V650" stroke="#94afaa" stroke-width="1"/><g fill="#152c37" stroke="#58707a" stroke-opacity=".4"><path d="M280 667 L303 688 V727 H321 V688 L345 667Z"/><path d="M640 667 L663 688 V727 H681 V688 L705 667Z"/><path d="M1000 667 L1023 688 V727 H1041 V688 L1065 667Z"/></g>
+<path d="M0 657 H1500" stroke="#d5a44c" stroke-opacity=".6"/>
+</g>
+<g stroke="#c99960" stroke-width="1" opacity=".2"><path d="M100 695 h450"/><path d="M153 703 h440"/><path d="M206 711 h430"/><path d="M259 719 h420"/><path d="M312 727 h410"/><path d="M365 735 h400"/><path d="M418 743 h390"/><path d="M471 751 h380"/><path d="M524 759 h370"/><path d="M577 767 h360"/><path d="M150 775 h350"/><path d="M203 783 h340"/><path d="M256 791 h330"/><path d="M309 799 h320"/><path d="M362 807 h310"/><path d="M415 815 h300"/><path d="M468 823 h290"/></g>
+<g stroke="#69c9da" opacity=".12"><path d="M900 710 H1250 M1020 724 H1380 M830 751 H1130 M1030 794 H1440 M40 803 H300"/></g>
+</svg></div>
+<canvas id="pointerFx" aria-hidden="true"></canvas>
+<button id="motionToggle" type="button" aria-pressed="false">Pause effects</button>
+
+<nav>
+    <div class="brand">
+        <img
+            src="assets/logo.jpg"
+            class="team-logo"
+            alt="ThunderClaw Logo"
+        >
+        <div class="logo">
+            THUNDER<span>CLAW</span>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="#home">
+                HOME
+            </a>
+        </li>
+        <li>
+            <a href="#robots">
+                ROBOTS
+            </a>
+        </li>
+        <li>
+            <a href="#about">
+                ABOUT
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- =====================================================
+     HERO
+===================================================== -->
+<section
+    class="hero"
+    id="home"
+>
+    <div
+        class="hero-content"
+        id="heroContent"
+    >
+        <div class="hero-small">
+            FIRST TECH CHALLENGE
+        </div>
+        <h1>
+            THUNDER
+            <br>
+            <span>
+                CLAW
+            </span>
+        </h1>
+        <p>
+            We design, build and program robots
+            to solve problems, compete and inspire
+            the next generation of engineers.
+        </p>
+        <a
+            href="#robots"
+            class="hero-button"
+        >
+            EXPLORE OUR ROBOTS →
+        </a>
+    </div>
+<div class="carp-foreground" aria-hidden="true">
+<svg id="carpDragon" class="scene-layer" data-depth="-21" viewBox="0 0 420 570" xmlns="http://www.w3.org/2000/svg">
+<defs>
+ <linearGradient id="stone" x1="0" x2="1" y1="0" y2=".3"><stop stop-color="#708b98"/><stop offset=".33" stop-color="#e5e1ce"/><stop offset=".65" stop-color="#afbec0"/><stop offset="1" stop-color="#536f81"/></linearGradient>
+ <linearGradient id="stoneLight" x2=".8" y2="1"><stop stop-color="#f2edd9"/><stop offset="1" stop-color="#849ca6"/></linearGradient>
+ <linearGradient id="pedestal" x2="1" y2="0"><stop stop-color="#142a39"/><stop offset=".5" stop-color="#324a56"/><stop offset="1" stop-color="#102330"/></linearGradient>
+ <clipPath id="fishBodyClip"><path d="M239 126 C290 150 310 225 286 299 C270 351 223 385 164 380 C126 377 99 353 90 318 C111 342 142 344 163 329 C194 307 200 276 197 244 L179 150Z"/></clipPath>
+ <pattern id="masonry" width="38" height="25" patternUnits="userSpaceOnUse"><path d="M0 0 H38 V25 H0Z M19 0 V12 M0 12 H38" fill="none" stroke="#91a8ae" stroke-opacity=".12"/></pattern>
+</defs>
+<ellipse cx="218" cy="536" rx="153" ry="16" fill="#030c15" opacity=".5"/>
+<!-- Rear dorsal fins. -->
+<path d="M260 142 L294 156 289 171 312 187 297 199 316 218 300 234 312 255 291 266 299 290 277 296 278 321 252 326 245 347 224 348" fill="url(#stone)" stroke="#9cb2b7" stroke-width="2"/>
+<!-- Tail opens into a curling fan on the left. -->
+<path d="M164 352 C128 315 139 281 167 253 C125 266 124 291 98 290 C70 289 51 278 40 252 C32 290 55 316 85 324 C46 326 52 369 83 375 C110 381 128 367 164 377Z" fill="url(#stoneLight)" stroke="#8aa0a7" stroke-width="2"/>
+<g fill="none" stroke="#708b98" stroke-width="2"><path d="M44 271 Q60 298 93 302 T154 271 M48 283 Q62 309 96 312 T147 286 M59 298 Q83 323 114 316 M89 324 C52 332 64 368 87 366 C113 364 104 334 85 343 C74 349 84 357 91 352"/></g>
+<path d="M239 126 C290 150 310 225 286 299 C270 351 223 385 164 380 C126 377 99 353 90 318 C111 342 142 344 163 329 C194 307 200 276 197 244 L179 150Z" fill="url(#stone)" stroke="#d5dcce" stroke-width="2"/>
+<g clip-path="url(#fishBodyClip)" fill="none" stroke="#607f8d" stroke-width="1.8" opacity=".9"><path d="M142 154 q11.5 22 23 0"/><path d="M165 154 q11.5 22 23 0"/><path d="M188 154 q11.5 22 23 0"/><path d="M211 154 q11.5 22 23 0"/><path d="M234 154 q11.5 22 23 0"/><path d="M257 154 q11.5 22 23 0"/><path d="M280 154 q11.5 22 23 0"/><path d="M303 154 q11.5 22 23 0"/><path d="M326 154 q11.5 22 23 0"/><path d="M153.5 169 q11.5 22 23 0"/><path d="M176.5 169 q11.5 22 23 0"/><path d="M199.5 169 q11.5 22 23 0"/><path d="M222.5 169 q11.5 22 23 0"/><path d="M245.5 169 q11.5 22 23 0"/><path d="M268.5 169 q11.5 22 23 0"/><path d="M291.5 169 q11.5 22 23 0"/><path d="M314.5 169 q11.5 22 23 0"/><path d="M337.5 169 q11.5 22 23 0"/><path d="M142 184 q11.5 22 23 0"/><path d="M165 184 q11.5 22 23 0"/><path d="M188 184 q11.5 22 23 0"/><path d="M211 184 q11.5 22 23 0"/><path d="M234 184 q11.5 22 23 0"/><path d="M257 184 q11.5 22 23 0"/><path d="M280 184 q11.5 22 23 0"/><path d="M303 184 q11.5 22 23 0"/><path d="M326 184 q11.5 22 23 0"/><path d="M153.5 199 q11.5 22 23 0"/><path d="M176.5 199 q11.5 22 23 0"/><path d="M199.5 199 q11.5 22 23 0"/><path d="M222.5 199 q11.5 22 23 0"/><path d="M245.5 199 q11.5 22 23 0"/><path d="M268.5 199 q11.5 22 23 0"/><path d="M291.5 199 q11.5 22 23 0"/><path d="M314.5 199 q11.5 22 23 0"/><path d="M337.5 199 q11.5 22 23 0"/><path d="M142 214 q11.5 22 23 0"/><path d="M165 214 q11.5 22 23 0"/><path d="M188 214 q11.5 22 23 0"/><path d="M211 214 q11.5 22 23 0"/><path d="M234 214 q11.5 22 23 0"/><path d="M257 214 q11.5 22 23 0"/><path d="M280 214 q11.5 22 23 0"/><path d="M303 214 q11.5 22 23 0"/><path d="M326 214 q11.5 22 23 0"/><path d="M153.5 229 q11.5 22 23 0"/><path d="M176.5 229 q11.5 22 23 0"/><path d="M199.5 229 q11.5 22 23 0"/><path d="M222.5 229 q11.5 22 23 0"/><path d="M245.5 229 q11.5 22 23 0"/><path d="M268.5 229 q11.5 22 23 0"/><path d="M291.5 229 q11.5 22 23 0"/><path d="M314.5 229 q11.5 22 23 0"/><path d="M337.5 229 q11.5 22 23 0"/><path d="M142 244 q11.5 22 23 0"/><path d="M165 244 q11.5 22 23 0"/><path d="M188 244 q11.5 22 23 0"/><path d="M211 244 q11.5 22 23 0"/><path d="M234 244 q11.5 22 23 0"/><path d="M257 244 q11.5 22 23 0"/><path d="M280 244 q11.5 22 23 0"/><path d="M303 244 q11.5 22 23 0"/><path d="M326 244 q11.5 22 23 0"/><path d="M153.5 259 q11.5 22 23 0"/><path d="M176.5 259 q11.5 22 23 0"/><path d="M199.5 259 q11.5 22 23 0"/><path d="M222.5 259 q11.5 22 23 0"/><path d="M245.5 259 q11.5 22 23 0"/><path d="M268.5 259 q11.5 22 23 0"/><path d="M291.5 259 q11.5 22 23 0"/><path d="M314.5 259 q11.5 22 23 0"/><path d="M337.5 259 q11.5 22 23 0"/><path d="M142 274 q11.5 22 23 0"/><path d="M165 274 q11.5 22 23 0"/><path d="M188 274 q11.5 22 23 0"/><path d="M211 274 q11.5 22 23 0"/><path d="M234 274 q11.5 22 23 0"/><path d="M257 274 q11.5 22 23 0"/><path d="M280 274 q11.5 22 23 0"/><path d="M303 274 q11.5 22 23 0"/><path d="M326 274 q11.5 22 23 0"/><path d="M153.5 289 q11.5 22 23 0"/><path d="M176.5 289 q11.5 22 23 0"/><path d="M199.5 289 q11.5 22 23 0"/><path d="M222.5 289 q11.5 22 23 0"/><path d="M245.5 289 q11.5 22 23 0"/><path d="M268.5 289 q11.5 22 23 0"/><path d="M291.5 289 q11.5 22 23 0"/><path d="M314.5 289 q11.5 22 23 0"/><path d="M337.5 289 q11.5 22 23 0"/><path d="M142 304 q11.5 22 23 0"/><path d="M165 304 q11.5 22 23 0"/><path d="M188 304 q11.5 22 23 0"/><path d="M211 304 q11.5 22 23 0"/><path d="M234 304 q11.5 22 23 0"/><path d="M257 304 q11.5 22 23 0"/><path d="M280 304 q11.5 22 23 0"/><path d="M303 304 q11.5 22 23 0"/><path d="M326 304 q11.5 22 23 0"/><path d="M153.5 319 q11.5 22 23 0"/><path d="M176.5 319 q11.5 22 23 0"/><path d="M199.5 319 q11.5 22 23 0"/><path d="M222.5 319 q11.5 22 23 0"/><path d="M245.5 319 q11.5 22 23 0"/><path d="M268.5 319 q11.5 22 23 0"/><path d="M291.5 319 q11.5 22 23 0"/><path d="M314.5 319 q11.5 22 23 0"/><path d="M337.5 319 q11.5 22 23 0"/><path d="M142 334 q11.5 22 23 0"/><path d="M165 334 q11.5 22 23 0"/><path d="M188 334 q11.5 22 23 0"/><path d="M211 334 q11.5 22 23 0"/><path d="M234 334 q11.5 22 23 0"/><path d="M257 334 q11.5 22 23 0"/><path d="M280 334 q11.5 22 23 0"/><path d="M303 334 q11.5 22 23 0"/><path d="M326 334 q11.5 22 23 0"/><path d="M153.5 349 q11.5 22 23 0"/><path d="M176.5 349 q11.5 22 23 0"/><path d="M199.5 349 q11.5 22 23 0"/><path d="M222.5 349 q11.5 22 23 0"/><path d="M245.5 349 q11.5 22 23 0"/><path d="M268.5 349 q11.5 22 23 0"/><path d="M291.5 349 q11.5 22 23 0"/><path d="M314.5 349 q11.5 22 23 0"/><path d="M337.5 349 q11.5 22 23 0"/><path d="M142 364 q11.5 22 23 0"/><path d="M165 364 q11.5 22 23 0"/><path d="M188 364 q11.5 22 23 0"/><path d="M211 364 q11.5 22 23 0"/><path d="M234 364 q11.5 22 23 0"/><path d="M257 364 q11.5 22 23 0"/><path d="M280 364 q11.5 22 23 0"/><path d="M303 364 q11.5 22 23 0"/><path d="M326 364 q11.5 22 23 0"/></g>
+<path d="M200 160 C230 204 232 275 198 324" fill="none" stroke="#ece8d8" opacity=".4" stroke-width="5"/>
+<!-- Pectoral fin hangs below the gill. -->
+<path d="M190 151 C204 175 222 194 220 231 L201 220 195 233 187 215 176 221 170 177Z" fill="url(#stoneLight)" stroke="#7b939e" stroke-width="2"/>
+<path d="M184 167 L190 209 M194 175 L201 215 M203 186 L213 216" fill="none" stroke="#738e9b" stroke-width="2"/>
+<!-- Head faces left; ornate horns, long swept mane, open jaw. -->
+<path d="M213 84 C236 70 248 54 276 68 L313 82 335 75 Q334 95 305 97 L276 93 303 114 328 120 305 132 329 146 305 153 279 143 288 168 261 155 246 166 227 147 202 144Z" fill="url(#stone)" stroke="#c6d1cb" stroke-width="2"/>
+<g fill="none" stroke="#6c8895" stroke-width="3"><path d="M225 91 C257 78 259 104 292 107 M226 109 Q262 112 280 132 L303 141 M229 128 Q249 132 263 151"/></g>
+<path d="M175 85 C155 66 146 38 159 26 C173 21 179 51 194 58 L206 38 Q229 33 244 53 L268 47 Q288 43 289 66 Q272 69 252 62 L236 74 241 107 224 137 200 161 170 164 156 151 132 142 117 124 118 102 138 89 150 77Z" fill="url(#stoneLight)" stroke="#8ca2aa" stroke-width="2"/>
+<path d="M164 35 Q163 51 187 73 M170 36 Q172 50 191 64 M253 53 Q272 49 283 61" fill="none" stroke="#9caea9" stroke-width="2"/>
+<!-- Brow, nostril and round muzzle lobes. -->
+<path d="M154 96 Q169 75 193 86 L203 98 Q188 92 174 106" fill="#cbd2c5" stroke="#748f99" stroke-width="3"/>
+<path d="M161 100 Q174 89 186 99 Q176 113 162 108Z" fill="#4d6977"/><ellipse cx="173" cy="102" rx="4" ry="5" fill="#dce2d4"/>
+<path d="M151 89 C147 70 131 74 130 89 C115 81 105 94 115 106 C99 109 103 127 119 128 L139 127 157 111" fill="url(#stoneLight)" stroke="#8ea4aa" stroke-width="2"/>
+<ellipse cx="122" cy="105" rx="5" ry="4" fill="#627c89"/>
+<path d="M111 126 Q129 123 147 132 L162 143 149 148 129 140 116 140Z" fill="#324f60"/>
+<path d="M125 128 L129 137 134 130 M140 133 L145 143 149 137" fill="#f1e8ce"/>
+<path d="M118 140 Q117 158 131 170 L144 180 132 152 155 157 172 151" fill="url(#stone)" stroke="#92a5a9" stroke-width="2"/>
+<!-- Sculpted cheek curls. -->
+<g fill="none" stroke="#758e98" stroke-width="3"><path d="M211 85 C186 61 206 45 218 57 C230 71 209 78 207 65 M202 106 C228 99 233 127 212 136 C190 143 180 125 194 117 C209 110 216 128 203 128 M179 143 Q180 159 198 157"/></g>
+<path d="M121 139 C103 152 114 174 94 180 M137 149 C147 177 166 169 165 190" fill="none" stroke="#d1d6c8" stroke-width="4" stroke-linecap="round"/>
+<!-- Carved waves at the foot of the statue. -->
+<path d="M88 375 Q73 350 98 339 Q117 333 130 357 Q140 330 160 345 Q175 317 194 341 Q215 325 228 345 Q252 321 268 334 Q288 310 307 330 Q325 352 309 379Z" fill="url(#stoneLight)" stroke="#8ba3aa" stroke-width="2"/>
+<g fill="none" stroke="#758e99" stroke-width="3"><path d="M100 373 C75 351 110 339 114 359 C117 375 94 372 101 361 M153 373 C126 347 169 332 169 359 C169 374 148 370 155 359 M207 374 C180 353 215 333 224 351 C234 368 208 375 207 357 M262 371 C236 353 260 332 275 349 C285 362 261 372 261 355 M289 354 C276 331 309 323 310 345"/></g>
+<!-- Lotus rim and masonry pedestal. -->
+<path d="M89 378 Q199 364 316 378 L324 403 Q211 419 82 403Z" fill="url(#stone)" stroke="#b6c6c4" stroke-width="2"/>
+<path d="M93 400 Q85 388 96 378 Q107 390 100 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M110 400 Q102 388 113 378 Q124 390 117 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M127 400 Q119 388 130 378 Q141 390 134 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M144 400 Q136 388 147 378 Q158 390 151 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M161 400 Q153 388 164 378 Q175 390 168 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M178 400 Q170 388 181 378 Q192 390 185 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M195 400 Q187 388 198 378 Q209 390 202 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M212 400 Q204 388 215 378 Q226 390 219 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M229 400 Q221 388 232 378 Q243 390 236 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M246 400 Q238 388 249 378 Q260 390 253 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M263 400 Q255 388 266 378 Q277 390 270 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M280 400 Q272 388 283 378 Q294 390 287 403" fill="none" stroke="#78949e" stroke-width="1.5"/><path d="M297 400 Q289 388 300 378 Q311 390 304 403" fill="none" stroke="#78949e" stroke-width="1.5"/>
+<path d="M81 407 Q210 418 325 407 L337 513 Q210 545 67 515Z" fill="url(#pedestal)" stroke="#526c79"/>
+<path d="M81 407 Q210 418 325 407 L337 513 Q210 545 67 515Z" fill="url(#masonry)"/>
+<ellipse cx="204" cy="407" rx="124" ry="9" fill="#758d98"/><path d="M72 507 Q210 532 333 506" fill="none" stroke="#597683" stroke-width="3"/>
+<text x="207" y="458" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="22" fill="#eee6d3">Cá chép hóa Rồng</text>
+<text x="207" y="482" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" letter-spacing="2" fill="#a7c5cf">ĐÀ NẴNG · VIỆT NAM</text>
+</svg></div>
+<div class="scene-caption"><span><b>DA NANG, VIETNAM</b><br>DRAGON BRIDGE · CARP DRAGON · HAN RIVER</span><span>MOVE TO EXPLORE · CLICK TO MAKE WAVES</span></div>
+</section>
+<!-- =====================================================
+     ROBOTS
+===================================================== -->
+<section
+    class="robots-section"
+    id="robots"
+>
+    <div class="section-header">
+        <div class="section-tag">
+            THUNDERCLAW FTC
+        </div>
+        <h2>
+            OUR
+            <span>
+                ROBOTS
+            </span>
+        </h2>
+        <p>
+            Every robot represents countless hours
+            of engineering, programming, testing
+            and teamwork.
+        </p>
+    </div>
+    <div class="robot-grid">
+        <!-- ROBOT 01 -->
+        <article class="robot-card">
+            <img
+                src="assets/robots/biobuzz.jpg"
+                class="robot-image"
+                alt="ThunderClaw Robot"
+            >
+            <div class="robot-info">
+                <div class="robot-season">
+                    FTC 2026–2027
+                </div>
+                <h3 class="robot-name">
+                    THUNDERCLAW 01
+                </h3>
+                <p class="robot-description">
+                    Our competition robot for
+                    the BIOBUZZ season.
+                </p>
+                <a
+                    href="#"
+                    class="robot-button"
+                >
+                    VIEW ROBOT →
+                </a>
+            </div>
+        </article>
+        <!-- ROBOT 02 -->
+        <article class="robot-card">
+            <img
+                src="assets/robots/robot2.jpg"
+                class="robot-image"
+                alt="ThunderClaw Robot"
+            >
+            <div class="robot-info">
+                <div class="robot-season">
+                    FTC 2025–2026
+                </div>
+                <h3 class="robot-name">
+                    THUNDERCLAW 02
+                </h3>
+                <p class="robot-description">
+                    Competition robot developed
+                    by ThunderClaw.
+                </p>
+                <a
+                    href="#"
+                    class="robot-button"
+                >
+                    VIEW ROBOT →
+                </a>
+            </div>
+        </article>
+        <!-- ROBOT 03 -->
+        <article class="robot-card">
+            <img
+                src="assets/robots/rescue.jpg"
+                class="robot-image"
+                alt="ThunderClaw Rescue Robot"
+            >
+            <div class="robot-info">
+                <div class="robot-season">
+                    RESEARCH PROJECT
+                </div>
+                <h3 class="robot-name">
+                    RESCUE BOT
+                </h3>
+                <p class="robot-description">
+                    Autonomous search and rescue
+                    robot developed by ThunderClaw.
+                </p>
+                <a
+                    href="#"
+                    class="robot-button"
+                >
+                    VIEW ROBOT →
+                </a>
+            </div>
+        </article>
+    </div>
+</section>
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+<section
+    class="about"
+    id="about"
+>
+    <div class="about-content">
+        <div class="section-tag">
+            WHO WE ARE
+        </div>
+        <h2>
+            BUILD.
+            <span>
+                CREATE.
+            </span>
+            COMPETE.
+        </h2>
+        <p>
+            ThunderClaw is a robotics team focused
+            on engineering, programming, innovation
+            and teamwork through FIRST Tech Challenge.
+        </p>
+        <p>
+            We believe robotics is more than building
+            a machine. It is about learning from failure,
+            sharing knowledge and creating solutions
+            that can make a difference.
+        </p>
+        <div class="values">
+            <div class="value-card">
+                <div class="value-number">
+                    01
+                </div>
+                <h3>
+                    ENGINEERING
+                </h3>
+                <p>
+                    Designing and building reliable
+                    competition robots.
+                </p>
+            </div>
+            <div class="value-card">
+                <div class="value-number">
+                    02
+                </div>
+                <h3>
+                    INNOVATION
+                </h3>
+                <p>
+                    Turning ideas into real-world
+                    robotic solutions.
+                </p>
+            </div>
+            <div class="value-card">
+                <div class="value-number">
+                    03
+                </div>
+                <h3>
+                    TEAMWORK
+                </h3>
+                <p>
+                    Learning, sharing and competing
+                    together through Gracious Professionalism.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+<footer>
+    <div>
+        © 2026
+        <strong>
+            ThunderClaw FTC
+        </strong>
+    </div>
+    <div>
+        FIRST Tech Challenge
+    </div>
+</footer>
+<script>
+(() => {
+  'use strict';
+  // Tune the intensity here. All artwork is embedded in this file.
+  const SETTINGS = { particles: 65, parallax: 1, trailLife: 0.55, maxDpr: 2 };
+  const ambient = document.querySelector('#ambient'), fx = document.querySelector('#pointerFx');
+  const ac = ambient.getContext('2d'), fc = fx.getContext('2d');
+  const layers = [...document.querySelectorAll('[data-depth]')];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  const toggle = document.querySelector('#motionToggle');
+  let paused = reduced.matches, width = 0, height = 0, raf = 0, previous = 0;
+  let stars = [], trail = [], rings = [], point = {x:0,y:0}, target = {x:0,y:0};
+  let pointer = {x:0,y:0,active:false};
+  function size() {
+    width = innerWidth; height = innerHeight;
+    const dpr = Math.min(devicePixelRatio || 1, SETTINGS.maxDpr);
+    for (const [canvas, context] of [[ambient,ac],[fx,fc]]) {
+      canvas.width = Math.round(width*dpr); canvas.height = Math.round(height*dpr);
+      context.setTransform(dpr,0,0,dpr,0,0);
+    }
+    stars = Array.from({length:width<650?28:SETTINGS.particles}, () => ({
+      x:Math.random()*width, y:Math.random()*height, r:.4+Math.random()*1.3,
+      v:3+Math.random()*9, phase:Math.random()*Math.PI*2
+    }));
+    drawAmbient(0,0);
+  }
+  function drawAmbient(t,dt) {
+    ac.clearRect(0,0,width,height);
+    for(const s of stars) {
+      s.y -= s.v*dt; if(s.y < -8) s.y = height+8;
+      const alpha = .22+.22*(.5+.5*Math.sin(t*.65+s.phase));
+      ac.fillStyle = `rgba(169,216,230,${alpha})`;
+      ac.beginPath(); ac.arc(s.x,s.y,s.r,0,Math.PI*2); ac.fill();
+    }
+    // Soft horizontal ripples move over the lower river, behind page content.
+    for(let i=0;i<17;i++) {
+      const y=height*.81+i*height*.012;
+      const x=width*.38+Math.sin(t*.4+i*.85)*width*.15;
+      ac.strokeStyle=`rgba(255,190,114,${.035+(i%3)*.012})`;
+      ac.beginPath();ac.moveTo(x,y);ac.lineTo(x+50+i*8,y);ac.stroke();
+    }
+  }
+  function frame(now) {
+    raf=0;
+    if(paused || document.hidden) return;
+    const dt=Math.min((now-(previous||now))/1000,.04); previous=now;
+    const ease=1-Math.exp(-5*dt);
+    point.x+=(target.x-point.x)*ease; point.y+=(target.y-point.y)*ease;
+    for(const layer of layers) {
+      const d=Number(layer.dataset.depth)*SETTINGS.parallax;
+      layer.style.transform=`translate(${point.x*d}px,${point.y*d*.5}px)`;
+    }
+    drawAmbient(now/1000,dt);
+    fc.clearRect(0,0,width,height);
+    trail=trail.filter(p=>(p.life-=dt)>0);
+    // Amber and cyan ribbons: a wake of light, rather than a replacement cursor.
+    for(let k=1;k<trail.length;k++) {
+      const a=trail[k-1],b=trail[k],alpha=b.life/SETTINGS.trailLife;
+      if(Math.hypot(a.x-b.x,a.y-b.y)>160) continue;
+      fc.strokeStyle=`rgba(255,193,119,${alpha*.5})`;fc.lineWidth=1.5;
+      fc.beginPath();fc.moveTo(a.x,a.y);fc.lineTo(b.x,b.y);fc.stroke();
+      fc.strokeStyle=`rgba(119,224,239,${alpha*.3})`;
+      fc.beginPath();fc.moveTo(a.x-4,a.y+6);fc.lineTo(b.x-4,b.y+6);fc.stroke();
+    }
+    if(pointer.active && fine.matches) {
+      const g=fc.createRadialGradient(pointer.x,pointer.y,0,pointer.x,pointer.y,60);
+      g.addColorStop(0,'rgba(255,194,116,.08)');g.addColorStop(1,'rgba(255,194,116,0)');
+      fc.fillStyle=g;fc.fillRect(pointer.x-60,pointer.y-60,120,120);
+    }
+    rings=rings.filter(r=>(r.life-=dt)>0);
+    for(const r of rings) {
+      const progress=1-r.life/1.4;
+      fc.strokeStyle=`rgba(135,225,236,${r.life/1.4*.5})`;fc.lineWidth=1;
+      for(let n=0;n<3;n++) {
+        const radius=progress*125-n*15;
+        if(radius<=0)continue;
+        fc.beginPath();fc.ellipse(r.x,r.y,radius,radius*.36,0,0,Math.PI*2);fc.stroke();
+      }
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function sync() {
+    cancelAnimationFrame(raf); raf=0; previous=0;
+    toggle.setAttribute('aria-pressed',String(paused));
+    toggle.textContent=paused?'Enable effects':'Pause effects';
+    if(paused) {
+      target={x:0,y:0};point={x:0,y:0};trail=[];rings=[];
+      layers.forEach(l=>l.style.transform='');fc.clearRect(0,0,width,height);
+    } else if(!document.hidden) raf=requestAnimationFrame(frame);
+  }
+  addEventListener('pointermove',e=>{
+    if(paused || !fine.matches || e.pointerType==='touch') return;
+    pointer={x:e.clientX,y:e.clientY,active:true};
+    target={x:e.clientX/width-.5,y:e.clientY/height-.5};
+    const last=trail[trail.length-1];
+    if(!last||Math.hypot(last.x-e.clientX,last.y-e.clientY)>3) {
+      trail.push({x:e.clientX,y:e.clientY,life:SETTINGS.trailLife});
+      if(trail.length>65)trail.shift();
+    }
+  },{passive:true});
+  document.documentElement.addEventListener('pointerleave',()=>{
+    pointer.active=false;target={x:0,y:0};
+  });
+  addEventListener('blur',()=>{pointer.active=false;target={x:0,y:0};});
+  addEventListener('pointerdown',e=>{
+    if(paused || e.target.closest('a,button,input,textarea,select'))return;
+    rings.push({x:e.clientX,y:e.clientY,life:1.4});if(rings.length>8)rings.shift();
+  },{passive:true});
+  toggle.addEventListener('click',()=>{paused=!paused;sync();});
+  reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});
+  fine.addEventListener('change',()=>{pointer.active=false;target={x:0,y:0};trail=[];});
+  document.addEventListener('visibilitychange',sync);
+  addEventListener('resize',size,{passive:true});
+  // Original image paths are retained. Missing files get explicit placeholders.
+  document.querySelectorAll('img').forEach(img=>{
+    const fallback=()=>{
+      if(!img.isConnected)return;
+      const box=document.createElement('div');
+      if(img.classList.contains('team-logo')) {box.className='logo-placeholder';box.textContent='TC';box.setAttribute('aria-label','ThunderClaw');}
+      else {box.className='robot-image asset-placeholder';box.innerHTML='<span>⌁</span><small>ROBOT PHOTO COMING SOON</small>';}
+      img.replaceWith(box);
+    };
+    img.addEventListener('error',fallback,{once:true});
+    if(img.complete&&!img.naturalWidth)fallback();
+  });
+  size();sync();
+})();
+
+</script>
+</body>
+</html>
